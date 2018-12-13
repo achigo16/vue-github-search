@@ -13,7 +13,7 @@
                     <h1>{{user.name || user.login}}</h1>
                     <ul class="status">
                         <li>
-                            <a :href="`https://github.com/${user.login}?tab=repositories`" target="_blank">
+                            <a @click="getRepo" href="javascript:void(0)">
                                 <strong>{{user.public_repos}}</strong>
                                 <span>Repos</span>
                             </a> 
@@ -41,11 +41,17 @@
 </template>
 
 <script>
-import { mapState } from "vuex"
+import { mapState, mapActions } from "vuex"
 
 export default {
   name: "user",
-  computed: mapState(["loading", "user"])
+  computed: mapState(["loading", "user"]),
+  methods: {
+    ...mapActions(["searchRepo"]),
+    getRepo: function() {
+      this.searchRepo()
+    }
+  }
 }
 </script>
 

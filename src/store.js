@@ -7,20 +7,32 @@ Vue.use(Vuex)
 const SET_SEARCH_QUERY = "SET_SEARCH_QUERY"
 const SET_LOADING = "SET_LOADING"
 const SET_USER = "SET_USER"
+const SET_REPO = "SET_REPO"
+const SET_LOADING_REPO = "SET_LOADING_REPO"
 const RESET_USER = "RESET_USER"
 
 export default new Vuex.Store({
   state: {
     searchQuery: "",
     loading: false,
-    user: null
+    user: null,
+    loadingRepo: false,
+    repo: null
   },
   mutations: {
     [SET_SEARCH_QUERY]: (state, searchQuery) =>
       (state.searchQuery = searchQuery),
     [SET_LOADING]: (state, loading) => (state.loading = loading),
-    [SET_USER]: (state, user) => (state.user = user),
-    [RESET_USER]: state => (state.user = null)
+    [SET_LOADING_REPO]: (state, loading) => (state.loadingRepo = loading),
+    [SET_USER]: (state, user) => {
+      state.user = user
+      state.repo = null
+    },
+    [RESET_USER]: state => {
+      state.user = null
+      state.repo = null
+    },
+    [SET_REPO]: (state, repo) => (state.repo = repo)
   },
   actions: {
     setSearchQuery({ commit }, searchQuery) {
@@ -37,6 +49,14 @@ export default new Vuex.Store({
         commit(RESET_USER)
       }
       commit(SET_LOADING, false)
+    },
+    async searchRepo({ commit }, state) {
+      commit(SET_LOADING_REPO, true)
+      try {
+        const { data } = await axios.get(this.state.user.repos_url)
+        commit(SET_REPO, data)
+      } catch (e) {}
+      commit(SET_LOADING_REPO, false)
     }
   }
 })

@@ -1,5 +1,5 @@
 <template>
-    <input v-model="query" @input="debouncedSearch" placeholder="Enter Username" />
+    <input v-model="query" @input="debouncedSearch" :placeholder="placeHolder" />
 </template>
 
 <script>
@@ -8,6 +8,9 @@ import debounce from "lodash/debounce"
 
 export default {
   name: "search",
+  props: {
+    placeHolder: String
+  },
   computed: {
     ...mapState(["searchQuery"]),
     query: {
@@ -31,7 +34,16 @@ export default {
 <style lang="stylus">
 input {
     width: 100%;
-    font-size: 16px;
+    font-size: 20px;
+    padding: 10px 0;
     text-align: center;
+    outline: none;
+    border: 0;
+    background: #f1f1f1;
+    border-radius: 10px;
+    color: #000;
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 </style>

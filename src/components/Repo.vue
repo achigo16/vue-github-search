@@ -8,12 +8,12 @@
                 <div v-for="(r, index) in repo" :key="index">
                     <div class="repo">
                         <a :href="r.html_url" target="_blank"><h4>{{r.name}}</h4></a>
-                        <p>{{ (r.description != undefined && r.description.length > 100 ? r.description.substr(0, 98)+'...': r.description)  || "No Description" }}</p>
+                        <p>{{ (r.description != undefined && r.description.length > 80 ? r.description.substr(0, 78)+'...': r.description)  || "No Description" }}</p>
                         <div class="label">
                             <span>{{r.language || 'N/A' }}</span>
                         </div>
                         <div class="bottom">
-                            <p>{{r.full_name}}</p>
+                            <p class="yes">{{r.full_name}}</p>
                         </div>
                     </div>
                 </div>
@@ -54,8 +54,10 @@ export default {
             padding-top: 15px;
 
             h4 {
+                padding: 10px;
                 font-size: 17px;
                 margin-bottom: 0;
+                word-wrap: break-word;
             }
         }
 
@@ -74,9 +76,8 @@ export default {
         }
 
         p {
-            font-size: 11px;
+            font-size: 12px;
             text-align: center;
-            padding: 10px;
         }
 
         strong {
@@ -90,9 +91,9 @@ export default {
             width: 100%;
             border-top: 1px solid lightgray;
 
-            p {
+            .yes {
                 text-align: center;
-                font-size: 11px;
+                font-size: 9px;
                 padding: 0px;
             }
         }

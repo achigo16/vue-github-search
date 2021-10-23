@@ -24,9 +24,9 @@ export default new Vuex.Store({
       (state.searchQuery = searchQuery),
     [SET_LOADING]: (state, loading) => (state.loading = loading),
     [SET_LOADING_REPO]: (state, loading) => (state.loadingRepo = loading),
-    [SET_USER]: (state, user) => {
-      state.user = user
-      state.repo = null
+    [SET_USER]: (state, data) => {
+      state.user = data.user
+      state.repo = data.repos
     },
     [RESET_USER]: state => {
       state.user = null
@@ -44,7 +44,23 @@ export default new Vuex.Store({
         const { data } = await axios.get(
           `https://api.github.com/users/${this.state.searchQuery}`
         )
-        commit(SET_USER, data)
+
+        let repos = []
+        if(data.name != undefined){
+          let get = await axios.get(
+            `https://api.github.com/users/${this.state.searchQuery}/repos`
+          )
+
+          if(get.data != undefined){
+            repos = get.data
+          }
+        }
+
+        console.log(repos)
+        commit(SET_USER, {
+          'user': data,
+          'repos': repos
+        })
       } catch (e) {
         commit(RESET_USER)
       }

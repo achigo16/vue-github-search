@@ -5,7 +5,8 @@
                 Loading
             </div>
             <div v-else-if="user" key="user">
-                <div class="background" :style="{backgroundImage: `url(${user.avatar_url})`}" ></div>
+                <!-- <div class="background" :style="{backgroundImage: `url(${user.avatar_url})`}" ></div> -->
+                <div class="background"></div>
                 <div class="content">
                     <a class="avatar" :href="`https://github.com/${user.login}`" target="_blank">
                         <img :src="user.avatar_url" :alt="user.login" />
@@ -57,10 +58,13 @@ export default {
 
 <style lang="stylus" scoped>
 .github-card {
-    margin-top: 50px;
-    padding: 20px;
+    margin-top: 20px;
+    padding: 20px 0px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
     text-align: center;
     background: #fff;
+    background-image: url("https://github.githubassets.com/images/modules/profile/profile-first-pr.svg");
     color: #000;
     position: relative;
 
@@ -75,7 +79,7 @@ export default {
         filter: blur(10px) opacity(50%);
         z-index: 1;
         position: absolute;
-        top: 0;
+        top: -10px;
         left: 0;
         right: 0;
         bottom: 0;
@@ -87,6 +91,7 @@ export default {
     .content {
         position: relative;
         z-index: 2;
+        margin-top: 50px;
 
         .avatar {
             display: inline-block;
@@ -114,7 +119,7 @@ export default {
             margin: 0;
             padding: 0;
             border-top: 1px solid lightgray;
-            border-bottom: 1px solid lightgray;
+            // border-bottom: 1px solid lightgray;
             zoom: 1;
 
             &:after {
